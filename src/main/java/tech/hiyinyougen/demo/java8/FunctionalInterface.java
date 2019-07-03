@@ -1,11 +1,9 @@
 package tech.hiyinyougen.demo.java8;
 
-import java.util.List;
-
 /**
  * @Author yinyg
  * @CreateTime 2019/7/3 16:00
- * @Description
+ * @Description 函数式接口
  */
 @java.lang.FunctionalInterface
 public interface FunctionalInterface<T> {

@@ -3,7 +3,7 @@ package tech.hiyinyougen.demo.java8;
 /**
  * @Author yinyg
  * @CreateTime 15:17
- * @Description
+ * @Description 接口默认方法和静态方法demo
  */
 public class Java8InterfaceDemo {
     public static void main(String[] args) {
