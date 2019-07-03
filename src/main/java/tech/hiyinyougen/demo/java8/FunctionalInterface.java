@@ -6,6 +6,6 @@ package tech.hiyinyougen.demo.java8;
  * @Description 函数式接口
  */
 @java.lang.FunctionalInterface
-public interface FunctionalInterface<T> {
+public interface FunctionalInterface {
     void handle(int a, int b);
 }
