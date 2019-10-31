@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-aop.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 1 配置对象 -->
+    <bean id="book" class="tech.hiyinyougen.java.aopDemo.Book" />
+    <bean id="myBook" class="tech.hiyinyougen.java.aopDemo.MyBook" />
+
+    <!-- 2 配置aop -->
+    <aop:config>
+        <!-- 2.1 配置切入点 -->
+        <aop:pointcut id="pointcut1" expression="execution(* tech.hiyinyougen.java.aopDemo.Book.*(..))" />
+
+        <!-- 2.2 配置切面 -->
+        <aop:aspect ref="myBook">
+            <aop:after method="before1" pointcut-ref="pointcut1" />
+            <aop:around method="around1" pointcut-ref="pointcut1" />
+            <aop:after method="after1" pointcut-ref="pointcut1" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>
