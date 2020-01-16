@@ -27,7 +27,7 @@ import org.springframework.messaging.handler.annotation.Payload;
  */
 @Data
 //@Configuration
-@ConfigurationProperties(prefix="spring.rabbitmq")
+//@ConfigurationProperties(prefix="spring.rabbitmq")
 @EnableRabbit
 public class RabbitConfig {
     public String host;
