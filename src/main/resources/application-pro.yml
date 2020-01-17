@@ -21,11 +21,6 @@ spring:
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     #useGlobalDataSourceStat: true # 合并多个DruidDataSource的监控数据
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
 #  rabbitmq:
 #    host: 127.0.0.1
 #    port: 5672
