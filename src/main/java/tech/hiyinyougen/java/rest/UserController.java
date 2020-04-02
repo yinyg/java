@@ -41,6 +41,12 @@ public class UserController {
         return userMapper.findAll();
     }
 
+    @ApiOperation("查询所有用户-mybatisxml")
+    @GetMapping("/findAllByMybatisxml")
+    public List<User> findAllByMybatisXml() {
+        return userMapper.findAllXml();
+    }
+
     @ApiOperation("新增所有用户")
     @PostMapping("/save")
     public boolean save(@RequestBody UserSaveDTO dto) {
