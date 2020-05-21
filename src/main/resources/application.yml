@@ -1,12 +1,6 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   application:
-    name: Java
-  profiles:
-    active: dev
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    name: java

@@ -1,7 +1,0 @@
-version: '3'
-services:
-  my-java-application:
-    build: .
-    image: my-java-application
-    ports:
-      - "8081:8081"
