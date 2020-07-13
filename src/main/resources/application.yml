@@ -41,6 +41,13 @@ spring:
     port: 5672
     username: guest
     password: guest
+#    ## 消费端配置
+#    listener:
+#      simple:
+#        concurrency: 5
+#        acknowledge-mode: manual
+#        max-concurrency: 10
+#        prefetch: 1
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
