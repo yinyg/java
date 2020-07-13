@@ -17,5 +17,5 @@ import lombok.NoArgsConstructor;
 public class UserModel {
     private Long id;
     private String Username;
-    private String age;
+    private Integer age;
 }
