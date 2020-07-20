@@ -26,7 +26,7 @@ public class MqController {
     @GetMapping("/sendMqTest")
     public ResultModel sendMqTest() {
         UserModel userModel = UserModel.builder().Username("yinyg").age(18).build();
-        sendMqUtils.prepare(RabbitMQConfig.JAVA_EXCHANGE, RabbitMQConfig.QUEUE, JSON.parseObject(JSON.toJSONString(userModel)));
+        sendMqUtils.prepare(RabbitMQConfig.JAVA_EXCHANGE, "test2", JSON.parseObject(JSON.toJSONString(userModel)));
         return ResultModel.builder().success(Boolean.TRUE).build();
     }
 }

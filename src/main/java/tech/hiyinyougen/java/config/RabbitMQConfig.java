@@ -26,11 +26,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.util.CollectionUtils;
-import tech.hiyinyougen.java.model.UserModel;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Author yinyg
@@ -85,9 +80,14 @@ public class RabbitMQConfig {
     public String queue(@Qualifier(CONNECTIONFACTORYNAME) ConnectionFactory connectionFactory) {
         try {
             Channel channel = connectionFactory.createConnection().createChannel(false);
-            channel.exchangeDeclare(JAVA_EXCHANGE, BuiltinExchangeType.FANOUT,true);
+            channel.exchangeDeclare(JAVA_EXCHANGE, BuiltinExchangeType.DIRECT,true);
+            channel.exchangeDeclare("java_exchange_2", BuiltinExchangeType.FANOUT,true);
             channel.queueDeclare(QUEUE, true, false, false, null);
-            channel.queueBind(QUEUE, JAVA_EXCHANGE,JAVA_EXCHANGE + "_" + QUEUE);
+            channel.queueDeclare("test2", true, false, false, null);
+            channel.queueDeclare("test3", true, false, false, null);
+            channel.queueBind(QUEUE, JAVA_EXCHANGE, JAVA_EXCHANGE + "." + QUEUE);
+            channel.queueBind("test2", JAVA_EXCHANGE, JAVA_EXCHANGE + "." + "test2");
+            channel.queueBind("test3", "java_exchange_2", "java_exchange_2" + "." + "test3");
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -108,7 +108,7 @@ public class RabbitMQConfig {
         return factory;
     }
 
-    @RabbitListener(queues = {QUEUE},containerFactory = LISTENERCONTAINERFACTORY)
+    @RabbitListener(queues = {"test2"},containerFactory = LISTENERCONTAINERFACTORY)
     public void processMessage0(@Payload Message content,
                                 @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,
                                 Channel channel) throws Exception {
@@ -123,7 +123,6 @@ public class RabbitMQConfig {
             }else{
                 throw new RuntimeException("ContentType不支持！（"+contentType+"）");
             }
-            UserModel userModel = JSON.parseObject(JSON.toJSONString(jsonObject), UserModel.class);
             System.out.println(JSON.toJSONString(jsonObject));
         } catch (Exception e){
             log.warn(e.getMessage());

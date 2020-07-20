@@ -31,7 +31,7 @@ public class SendMqUtils {
     public void prepare(String exchange, String queueName, JSONObject message) {
         try {
             RabbitTemplate template = commonRabbit.rabbitTemplate();
-            template.convertAndSend(exchange, queueName, JSONObject.toJSONString(message, SerializerFeature.WriteMapNullValue));
+            template.convertAndSend(exchange, exchange + "." + queueName, JSONObject.toJSONString(message, SerializerFeature.WriteMapNullValue));
         } catch (Exception ex) {
             log.info(ex.getMessage());
         }
