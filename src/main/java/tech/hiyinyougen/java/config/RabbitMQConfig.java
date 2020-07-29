@@ -72,7 +72,7 @@ public class RabbitMQConfig {
         connectionFactory.setPort(port);
         connectionFactory.setUsername(username);
         connectionFactory.setPassword(password);
-        connectionFactory.setPublisherConfirmType(CachingConnectionFactory.ConfirmType.valueOf(publisherConfirmType));
+//        connectionFactory.setPublisherConfirmType(CachingConnectionFactory.ConfirmType.valueOf(publisherConfirmType));
         return connectionFactory;
     }
 
@@ -81,13 +81,8 @@ public class RabbitMQConfig {
         try {
             Channel channel = connectionFactory.createConnection().createChannel(false);
             channel.exchangeDeclare(JAVA_EXCHANGE, BuiltinExchangeType.DIRECT,true);
-            channel.exchangeDeclare("java_exchange_2", BuiltinExchangeType.FANOUT,true);
             channel.queueDeclare(QUEUE, true, false, false, null);
-            channel.queueDeclare("test2", true, false, false, null);
-            channel.queueDeclare("test3", true, false, false, null);
             channel.queueBind(QUEUE, JAVA_EXCHANGE, JAVA_EXCHANGE + "." + QUEUE);
-            channel.queueBind("test2", JAVA_EXCHANGE, JAVA_EXCHANGE + "." + "test2");
-            channel.queueBind("test3", "java_exchange_2", "java_exchange_2" + "." + "test3");
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -108,7 +103,7 @@ public class RabbitMQConfig {
         return factory;
     }
 
-    @RabbitListener(queues = {"test2"},containerFactory = LISTENERCONTAINERFACTORY)
+    @RabbitListener(queues = {QUEUE},containerFactory = LISTENERCONTAINERFACTORY)
     public void processMessage0(@Payload Message content,
                                 @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,
                                 Channel channel) throws Exception {
