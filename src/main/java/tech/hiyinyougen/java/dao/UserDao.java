@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface UserDao {
-    @Select("select * from user")
+    @Select("select * from user limit 0, 1000")
     List<UserModel> selectAll();
 
     List<UserModel> selectAllXML();

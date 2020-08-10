@@ -1,10 +1,17 @@
 package tech.hiyinyougen.java.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import tech.hiyinyougen.java.dao.UserDao;
+import tech.hiyinyougen.java.domain.User;
 import tech.hiyinyougen.java.model.ResultModel;
 import tech.hiyinyougen.java.model.UserModel;
+import tech.hiyinyougen.java.repository.UserRepository;
 import tech.hiyinyougen.java.service.UserService;
 
 import java.util.List;
@@ -21,6 +28,8 @@ public class UserController {
     private UserDao userDao;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/findAll")
     public ResultModel findAll() {
@@ -32,5 +41,11 @@ public class UserController {
     public ResultModel save(@RequestBody UserModel userModel) {
         this.userService.save(userModel);
         return ResultModel.builder().success(Boolean.TRUE).build();
+    }
+
+    @GetMapping("/findAllByJpa")
+    public ResultModel findAllByJpa(@PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC, sort = {"id"}) Pageable pageable) {
+        Page<User> page = userRepository.findAll(pageable);
+        return ResultModel.builder().success(Boolean.TRUE).data(page).build();
     }
 }
