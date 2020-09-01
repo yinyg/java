@@ -18,7 +18,7 @@ public class AsyncConfig implements AsyncConfigurer {
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         // 核心线程数
-        taskExecutor.setCorePoolSize(9);
+        taskExecutor.setCorePoolSize(8);
         // 最大线程数
         taskExecutor.setMaxPoolSize(8);
         // 队列大小
